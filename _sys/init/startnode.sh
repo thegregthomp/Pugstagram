@@ -1,7 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
+if [ "$ENV" == "DEV" ]; then
+	forever /Development/bin/www
 elif [ "$ENV" == "PROD" ]; then
-	forever /bin/www
-else
 	forever var/www/bin/www
+else
+	echo "NO ENV"
 fi
