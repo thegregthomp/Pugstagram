@@ -1,0 +1,74 @@
+#!/bin/bash
+
+TITLE="pug_web"
+
+RED='\e[0;31m'
+GREEN='\e[42;37m'
+NC='\e[0m' # No Color
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+case ${@:1:1} in
+	start)
+        if [ "$(docker inspect --format="{{ .State.Running }}" $TITLE)" == true ]; then
+            printf "${RED}ERROR: A DOCKER CONTAINER IS ALREADY RUNNING\a"
+            echo -e '\a'
+        else
+            docker run -d -p 80:3000 --name $TITLE -e ENV=DEV -v $DIR/app:/Development pugstagram_web
+            printf "${GREEN}DOCKER CONTAINER RUNNING. USE \'PUG ACCESS\' TO ACCESS TERMINAL${NC}\n"
+            docker logs -f $TITLE
+        fi
+        # docker run -i -t -p 80:3000 --rm --name $TITLE -v $DIR/app:/Development pugstagram_web bash -l
+    ;;
+    stop)
+        if [ "$(docker inspect --format="{{ .State.Running }}" $TITLE)" == true ]; then
+            docker stop $TITLE
+            docker rm $TITLE
+        else
+            printf "${RED}ERROR: NO DOCKER CONTAINER IS RUNNING\a"
+            echo -e '\a'
+        fi
+        
+    ;;
+    access)
+        if [ "$(docker inspect --format="{{ .State.Running }}" $TITLE)" == true ]; then
+            docker exec -it $TITLE bash
+        else
+            printf "${RED}ERROR: NO DOCKER CONTAINER IS RUNNING\a"
+            echo -e '\a'
+        fi
+        
+    ;;
+    test)
+        DOCK=$(docker inspect --format="{{ .State.Running }}" $TITLE);
+        if [ $DOCK == true ]; then
+            echo "Running"
+        else
+            echo "Noooo"
+        fi
+    ;;
+    logs)
+        docker logs $TITLE
+    ;;
+    setup)
+        docker build -t pugstagram_web .
+        #Remove dangling duplicate images
+        docker rmi $(docker images -f 'dangling=true' -q)
+    ;;
+    build)
+        
+    ;; 
+    #REMOVES ALL CONTAINERS
+    cc)
+        docker rm `docker ps --no-trunc -aq`
+        # docker rm $(docker ps -a -q)
+    ;;
+    #clean images
+    ci)
+        #REMOVES ALL IMAGES
+        docker images -q |xargs docker rmi
+    ;;
+    dir)
+        echo $DIR
+    ;;
+esac
