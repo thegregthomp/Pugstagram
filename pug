@@ -68,7 +68,4 @@ case ${@:1:1} in
         #REMOVES ALL IMAGES
         docker images -q |xargs docker rmi
     ;;
-    dir)
-        echo $DIR
-    ;;
 esac

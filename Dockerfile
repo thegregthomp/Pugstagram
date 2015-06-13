@@ -16,13 +16,18 @@ RUN sudo service mongod start
 RUN mkdir /data
 RUN mkdir /data/db
 
+#creating location for startup scripts, adding them and chmod them. 
 RUN mkdir -p /etc/my_init.d
-
 ADD _sys/init/ /etc/my_init.d/
 RUN chmod -R 777 /etc/my_init.d/
 
-RUN mkdir /Development
+#app dist/prod ready code location creation and binding
+RUN mkdir -p /var/www
+RUN chmod -R 644 /var/www
+ADD /dist /var/www
 
+#app dev code location creation. Binding is done with volumes in the run command
+RUN mkdir /Development
 RUN chmod 777 -R /Development
 
 RUN npm install -g grunt-cli express forever

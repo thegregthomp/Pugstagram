@@ -1,0 +1,3 @@
+[submodule "Pugstagram-Server-Scripts"]
+	path = Pugstagram-Server-Scripts
+	url = https://github.com/thegregthomp/Pugstagram-Server-Scripts.git
