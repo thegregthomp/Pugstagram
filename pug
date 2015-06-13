@@ -51,6 +51,7 @@ case ${@:1:1} in
         docker logs $TITLE
     ;;
     setup)
+        npm install
         docker build -t pugstagram_web .
         #Remove dangling duplicate images
         docker rmi $(docker images -f 'dangling=true' -q)

@@ -1,0 +1,14 @@
+{
+  "name": "Pugstagram",
+  "version": "1.0.0",
+  "homepage": "https://github.com/thegregthomp/Pugstagram",
+  "authors": [
+    "Gregory Thompson <greg@thegregthompson.com>"
+  ],
+  "license": "MIT",
+  "description": "Test",
+  "moduleType": [
+    "amd",
+    "node"
+  ]
+}

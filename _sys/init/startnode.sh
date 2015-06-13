@@ -1,2 +1,7 @@
 #!/bin/sh
-forever Development/bin/www
+
+elif [ "$ENV" == "PROD" ]; then
+	forever /bin/www
+else
+	forever var/www/bin/www
+fi
