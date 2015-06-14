@@ -9,7 +9,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     clean: {
-      assets: [
+      dist: [
         'dist/',
       ]
     },
@@ -17,9 +17,10 @@ module.exports = function(grunt) {
       master: {
         files: [{
           expand: true,
-          flatten: true,
+          flatten: false,
+          cwd: 'app',
           src: [
-            'app/',
+            '**/*.*',
           ],
           dest: 'dist/'
         }]
@@ -28,9 +29,11 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.registerTask('build', [
-    'copy:master',
+    'clean:dist',
+    'copy:master'
   ]);
   grunt.registerTask('default', [
   
