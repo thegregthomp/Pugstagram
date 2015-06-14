@@ -20,7 +20,7 @@ module.exports = function(grunt) {
           flatten: false,
           cwd: 'app',
           src: [
-            '**/*.*',
+            '**/*',
           ],
           dest: 'dist/'
         }]

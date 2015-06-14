@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo "SN ENV: $ENV"
 if [ "$ENV" == "DEV" ]; then
 	forever /Development/bin/www
 elif [ "$ENV" == "PROD" ]; then

@@ -20,6 +20,17 @@ case ${@:1:1} in
         fi
         # docker run -i -t -p 80:3000 --rm --name $TITLE -v $DIR/app:/Development pugstagram_web bash -l
     ;;
+    start_prod)
+        if [ "$(docker inspect --format="{{ .State.Running }}" $TITLE)" == true ]; then
+            printf "${RED}ERROR: A DOCKER CONTAINER IS ALREADY RUNNING\a"
+            echo -e '\a'
+        else
+            docker run -d -p 80:3000 --name $TITLE -e ENV=PROD  pugstagram_web
+            printf "${GREEN}DOCKER CONTAINER RUNNING. USE \'PUG ACCESS\' TO ACCESS TERMINAL${NC}\n"
+            docker logs -f $TITLE
+        fi
+        # docker run -i -t -p 80:3000 --rm --name $TITLE -v $DIR/app:/Development pugstagram_web bash -l
+    ;;
     stop)
         if [ "$(docker inspect --format="{{ .State.Running }}" $TITLE)" == true ]; then
             docker stop $TITLE
